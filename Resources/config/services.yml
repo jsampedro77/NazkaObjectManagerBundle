@@ -1,0 +1,13 @@
+parameters:
+     nazka_object_manager.abstract.manager.class: Nazka\ObjectManagerBundle\Manager\AbstractObjectManager
+
+services:
+    nazka_object_manager.abstract.manager:
+        class: %nazka_object_manager.abstract.manager.class%
+        arguments: [@doctrine.orm.entity_manager, @validator]
+        abstract: true
+        
+    nazka_object_manager.abstract.mongodb.manager:
+        class: %nazka_object_manager.abstract.manager.class%
+        arguments: [@doctrine.odm.mongodb.document_manager, @validator]
+        abstract: true
