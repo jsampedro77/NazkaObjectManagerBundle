@@ -9,9 +9,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Nazka\ObjectManagerBundle\Exception;
 
 /**
- * Description of AbstractManager
- * 
- * Candidate to move to a company bundle
+ * AbstractManager
  *
  * @author javier
  */
@@ -42,9 +40,16 @@ abstract class AbstractObjectManager
         return $object;
     }
 
-    public function findAll()
+    /**
+     * Find All with optional sorting options
+     * i.e array('field' => 'ASC')
+     * 
+     * @param array $sort
+     * @return type
+     */
+    public function findAll(array $sort = null)
     {
-        return $this->getRepository()->findAll();
+        return $this->getRepository()->findBy(array(), $sort);
     }
 
     public function remove($object)
