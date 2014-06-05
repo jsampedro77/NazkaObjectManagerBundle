@@ -5,6 +5,7 @@ namespace Nazka\ObjectManagerBundle\Manager;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Validator\Exception\ValidatorException;
 use Symfony\Component\Validator\Validator;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Nazka\ObjectManagerBundle\Exception;
 
 /**
@@ -20,11 +21,13 @@ abstract class AbstractObjectManager
     protected $om;
     protected $validator;
     protected $repository;
+    protected $eventDispatcher;
 
-    public function __construct(ObjectManager $om, Validator $validator)
+    public function __construct(ObjectManager $om, Validator $validator, EventDispatcherInterface $eventDispatcher)
     {
         $this->om = $om;
         $this->validator = $validator;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function find($id)
@@ -49,17 +52,18 @@ abstract class AbstractObjectManager
         $this->om->remove($object);
         $this->om->flush();
     }
-    
+
     public function create()
     {
         $class = $this->getClass();
-        
+
         return new $class();
     }
 
     public function save($object, $flush = false)
     {
         $class = $this->getClass();
+
         if (!$object instanceof $class) {
             throw new \Exception(sprintf('You must provide an instance of %s, %s provided', $class, get_class($object)));
         }
@@ -71,7 +75,6 @@ abstract class AbstractObjectManager
         } else {
             throw new ValidatorException($errors);
         }
-
 
         if ($flush) {
             $this->om->flush();

@@ -4,10 +4,10 @@ parameters:
 services:
     nazka_object_manager.abstract.manager:
         class: %nazka_object_manager.abstract.manager.class%
-        arguments: [@doctrine.orm.entity_manager, @validator]
+        arguments: [@doctrine.orm.entity_manager, @validator, @event_dispatcher]
         abstract: true
         
     nazka_object_manager.abstract.mongodb.manager:
         class: %nazka_object_manager.abstract.manager.class%
-        arguments: [@doctrine.odm.mongodb.document_manager, @validator]
+        arguments: [@doctrine.odm.mongodb.document_manager, @validator, @event_dispatcher]
         abstract: true
