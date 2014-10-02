@@ -4,7 +4,7 @@ namespace Nazka\ObjectManagerBundle\Manager;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Validator\Exception\ValidatorException;
-use Symfony\Component\Validator\Validator;
+use Symfony\Component\Validator\ValidatorInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Nazka\ObjectManagerBundle\Exception;
 
@@ -21,7 +21,7 @@ abstract class AbstractObjectManager
     protected $repository;
     protected $eventDispatcher;
 
-    public function __construct(ObjectManager $om, Validator $validator, EventDispatcherInterface $eventDispatcher)
+    public function __construct(ObjectManager $om, ValidatorInterface $validator, EventDispatcherInterface $eventDispatcher)
     {
         $this->om = $om;
         $this->validator = $validator;
